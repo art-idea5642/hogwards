@@ -29,7 +29,7 @@ public class StudentController {
     }
 
     @GetMapping("/age/{age}")
-    public ResponseEntity <List <Student>> getStudentsByAge (@PathVariable int age) {
+    public ResponseEntity<List<Student>> getStudentsByAge(@PathVariable int age) {
         List<Student> students = studentService.findStudentByAge(age);
         if (students.isEmpty()) {
             return ResponseEntity.notFound().build();

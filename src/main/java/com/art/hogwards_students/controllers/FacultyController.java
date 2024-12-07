@@ -59,6 +59,7 @@ public class FacultyController {
         facultyService.deleteFacultyByID(id);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping
     public ResponseEntity<Collection<Faculty>> getAllFaculties() {
         Collection<Faculty> faculties = facultyService.getAllFaculties();

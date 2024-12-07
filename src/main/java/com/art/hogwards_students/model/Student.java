@@ -14,7 +14,7 @@ public class Student {
     private int age;
 
     @ManyToOne
-    @JoinColumn (name = "facultyID")
+    @JoinColumn(name = "facultyID")
     private Faculty faculty;
 
     public Student(long id, String name, int age, Faculty faculty) {
@@ -24,7 +24,7 @@ public class Student {
         this.faculty = faculty;
     }
 
-    public Student (){
+    public Student() {
 
     }
 

@@ -24,7 +24,7 @@ public class StudentService {
         return studentRepository.findById(id).get();
     }
 
-    public List<Student> findStudentByAge (int age) {
+    public List<Student> findStudentByAge(int age) {
         return studentRepository.findByAge(age);
     }
 

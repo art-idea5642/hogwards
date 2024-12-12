@@ -46,6 +46,15 @@ public class FacultyController {
         return ResponseEntity.ok(faculties);
     }
 
+    @GetMapping("/search/{query}")
+    public ResponseEntity<List<Faculty>> findFacultiesByColourOrName(@RequestParam String query) {
+        List<Faculty> faculties = facultyService.findFacultiesByColourOrName(query);
+        if (faculties.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculties);
+    }
+
 
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
@@ -68,4 +77,6 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculties);
     }
+
+
 }

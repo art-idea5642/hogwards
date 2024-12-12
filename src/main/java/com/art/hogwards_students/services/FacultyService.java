@@ -29,6 +29,10 @@ public class FacultyService {
         return facultyRepository.findByColour(colour);
     }
 
+    public List<Faculty> findFacultiesByColourOrName (String query) {
+        return facultyRepository.findByColourIgnoreCaseOrNameIgnoreCase(query, query);
+    }
+
     public Faculty editFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
@@ -40,5 +44,6 @@ public class FacultyService {
     public Collection<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
     }
+
 }
 

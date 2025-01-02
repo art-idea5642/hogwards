@@ -3,10 +3,10 @@ package com.art.hogwards_students.services;
 import com.art.hogwards_students.model.Faculty;
 import com.art.hogwards_students.model.Student;
 import com.art.hogwards_students.repositories.StudentRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,13 +23,12 @@ public class StudentService {
     }
 
     public Student findStudent(long id) {
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElseThrow();
     }
 
     public List<Student> findStudentByAge(int age) {
         return studentRepository.findByAge(age);
     }
-
 
     public List<Student> findStudentByAgeBetween(Integer age1, Integer age2) {
         return studentRepository.findByAgeBetween(age1, age2);
@@ -44,7 +43,7 @@ public class StudentService {
     }
 
     public Collection<Student> getAll() {
-        return studentRepository.findAll();
+        return Collections.unmodifiableCollection(studentRepository.findAll());
     }
 
     public Collection<Student> getAllByFaculty(String facultyName) {
@@ -52,7 +51,11 @@ public class StudentService {
     }
 
     public Faculty getStudentsFaculty(String studentName) {
-        return studentRepository.findByName(studentName).getFaculty();
+        Student student = studentRepository.findByName(studentName);
+        if (student == null) {
+            throw new IllegalArgumentException("Студент с именем " + studentName + " не найден.");
+        }
+        return student.getFaculty();
     }
 
 }

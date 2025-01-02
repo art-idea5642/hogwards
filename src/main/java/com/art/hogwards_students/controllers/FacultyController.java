@@ -28,7 +28,7 @@ public class FacultyController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Faculty> findFacultyByName(@RequestParam long id) {
+    public ResponseEntity<Faculty> findFacultyById(@PathVariable long id) {
         Faculty faculty = facultyService.findFacultyByID(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -38,7 +38,7 @@ public class FacultyController {
 
 
     @GetMapping("/colour/{colour}")
-    public ResponseEntity<List<Faculty>> findFacultiesByColour(@RequestParam String colour) {
+    public ResponseEntity<List<Faculty>> findFacultiesByColour(@PathVariable String colour) {
         List<Faculty> faculties = facultyService.findFacultiesByColour(colour);
         if (faculties.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -47,7 +47,7 @@ public class FacultyController {
     }
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<List<Faculty>> findFacultiesByColourOrName(@RequestParam String query) {
+    public ResponseEntity<List<Faculty>> findFacultiesByColourOrName(@PathVariable String query) {
         List<Faculty> faculties = facultyService.findFacultiesByColourOrName(query);
         if (faculties.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -64,7 +64,7 @@ public class FacultyController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Faculty> deleteFacultyByName(@RequestParam long id) {
+    public ResponseEntity<Faculty> deleteFacultyById(@PathVariable long id) {
         facultyService.deleteFacultyByID(id);
         return ResponseEntity.ok().build();
     }

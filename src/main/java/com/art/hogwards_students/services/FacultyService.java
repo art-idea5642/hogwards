@@ -13,11 +13,15 @@ public class FacultyService {
 
     private final FacultyRepository facultyRepository;
 
+
+
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
+
     }
 
     public Faculty createFaculty(Faculty faculty) {
+
         return facultyRepository.save(faculty);
     }
 

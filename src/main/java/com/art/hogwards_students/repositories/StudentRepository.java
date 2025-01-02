@@ -1,7 +1,6 @@
 package com.art.hogwards_students.repositories;
 
 
-import com.art.hogwards_students.model.Faculty;
 import com.art.hogwards_students.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 

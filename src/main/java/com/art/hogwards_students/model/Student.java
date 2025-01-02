@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Student {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private int age;
@@ -23,6 +23,12 @@ public class Student {
         this.age = age;
         this.faculty = faculty;
     }
+
+    public Student( String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
 
     public Student() {
 
@@ -65,7 +71,7 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id && age == student.age && Objects.equals(name, student.name) && Objects.equals(faculty, student.faculty);
+        return age == student.age && Objects.equals(name, student.name) && Objects.equals(faculty, student.faculty);
     }
 
     @Override

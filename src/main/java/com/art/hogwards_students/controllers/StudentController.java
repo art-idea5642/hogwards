@@ -81,10 +81,9 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping ("/faculty/{student}")
-
-    public  ResponseEntity <Faculty> getStudentsFaculty (String student) {
-        Faculty faculty = studentService.getStudentsFaculty(student);
+    @GetMapping("/faculty/{studentName}")
+    public ResponseEntity<Faculty> getStudentsFaculty(@PathVariable String studentName) {
+        Faculty faculty = studentService.getStudentsFaculty(studentName);
         if (faculty == null) {
             return ResponseEntity.noContent().build();
         }

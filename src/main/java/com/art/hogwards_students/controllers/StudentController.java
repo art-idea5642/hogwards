@@ -1,5 +1,6 @@
 package com.art.hogwards_students.controllers;
 
+import com.art.hogwards_students.model.Faculty;
 import com.art.hogwards_students.model.Student;
 import com.art.hogwards_students.services.StudentService;
 import org.springframework.http.HttpStatus;
@@ -37,9 +38,26 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping("/age")
+    public ResponseEntity<List<Student>> getStudentsByAgeRange(
+            @RequestParam(required = false) Integer age1,
+            @RequestParam(required = false) Integer age2) {
+        if (age1 == null && age2 == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        List<Student> students = studentService.findStudentByAgeBetween(age1, age2);
+        if (students.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(students);
+    }
+
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudents() {
+    public ResponseEntity<Collection<Student>> getStudents(@RequestParam(required = false) String facultyName) {
+        if (facultyName != null && !facultyName.isBlank()){
+            return ResponseEntity.ok(studentService.getAllByFaculty(facultyName));
+        }
         return ResponseEntity.ok(studentService.getAll());
     }
 
@@ -62,5 +80,34 @@ public class StudentController {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/faculty/{studentName}")
+    public ResponseEntity<Faculty> getStudentsFaculty(@PathVariable String studentName) {
+        Faculty faculty = studentService.getStudentsFaculty(studentName);
+        if (faculty == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(faculty);
+    }
+
+    @GetMapping("/counter")
+    public long countAllStudent () {
+        return studentService.countAllStudents();
+    }
+
+    @GetMapping("/average_age")
+    public float getAverageAge () {
+        return studentService.getAverageAge();
+    }
+
+    @GetMapping("/last_5_students")
+    public ResponseEntity<List<Student>> findLastFiveStudents () {
+        List<Student> students = studentService.findLastFiveStudents();
+        if (students.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(students);
+    }
+
 
 }

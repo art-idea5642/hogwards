@@ -13,11 +13,15 @@ public class FacultyService {
 
     private final FacultyRepository facultyRepository;
 
+
+
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
+
     }
 
     public Faculty createFaculty(Faculty faculty) {
+
         return facultyRepository.save(faculty);
     }
 
@@ -27,6 +31,10 @@ public class FacultyService {
 
     public List<Faculty> findFacultiesByColour(String colour) {
         return facultyRepository.findByColour(colour);
+    }
+
+    public List<Faculty> findFacultiesByColourOrName (String query) {
+        return facultyRepository.findByColourIgnoreCaseOrNameIgnoreCase(query, query);
     }
 
     public Faculty editFaculty(Faculty faculty) {
@@ -40,5 +48,6 @@ public class FacultyService {
     public Collection<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
     }
+
 }
 

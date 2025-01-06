@@ -1,10 +1,7 @@
 package com.art.hogwards_students.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -12,14 +9,19 @@ import java.util.Objects;
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String colour;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private Collection<Student> students;
+
+    public Faculty(String name, String colour) {
+        this.name = name;
+        this.colour = colour;
+    }
 
     public Faculty(long id, String name, String colour) {
         this.id = id;
@@ -59,8 +61,7 @@ public class Faculty {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return id == faculty.id &&
-                Objects.equals(name, faculty.name) &&
+        return  Objects.equals(name, faculty.name) &&
                 Objects.equals(colour, faculty.colour);
     }
 

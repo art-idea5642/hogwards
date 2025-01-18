@@ -132,16 +132,14 @@ public class FacultyWebMvcTest {
 
         String newName = "Факультет";
         String newColour = "Цвет";
-        long newId = 2;
 
-        faculty.setId(newId);
         faculty.setName(newName);
         faculty.setColour(newColour);
 
-        facultyObject.put("id", newId);
         facultyObject.put("name", newName);
         facultyObject.put("colour", newColour);
 
+        when(facultyRepository.existsById(faculty.getId())).thenReturn(true);
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -155,7 +153,7 @@ public class FacultyWebMvcTest {
                 .andExpect(jsonPath("$.colour").value(faculty.getColour()));
 
         verify(facultyRepository, times(1)).save(argThat(f ->
-                f.getId() == newId &&
+                f.getId() == faculty.getId() &&
                         f.getName().equals(newName) &&
                         f.getColour().equals(newColour)
         ));
@@ -167,7 +165,7 @@ public class FacultyWebMvcTest {
     public void testDeleteFaculty() throws Exception {
         doNothing().when(facultyRepository).deleteById(id);
 
-
+        when(facultyRepository.existsById(id)).thenReturn(true);
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/faculty/" + id)
                         .accept(MediaType.APPLICATION_JSON))

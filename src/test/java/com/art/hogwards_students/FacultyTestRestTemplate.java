@@ -1,9 +1,7 @@
 package com.art.hogwards_students;
 
 import com.art.hogwards_students.controllers.FacultyController;
-import com.art.hogwards_students.controllers.StudentController;
 import com.art.hogwards_students.model.Faculty;
-import com.art.hogwards_students.model.Student;
 import com.art.hogwards_students.repositories.FacultyRepository;
 import com.art.hogwards_students.repositories.StudentRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +20,6 @@ import org.springframework.http.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,8 +54,8 @@ public class FacultyTestRestTemplate {
         facultyRepository.save(faculty);
         facultyRepository.save(faculty2);
         faculties = facultyRepository.findAll();
-
     }
+
     @AfterEach
     void cleanUp () {
         facultyRepository.deleteAll();
@@ -123,7 +120,7 @@ public class FacultyTestRestTemplate {
 
     @Test
     public void testEditFaculty() throws JSONException, JsonProcessingException {
-        Faculty expectedFaculty = new Faculty("Изменённое имя", "Изменённый цвет");
+        Faculty expectedFaculty = new Faculty(faculty.getId(), "Изменённое имя", "Изменённый цвет");
         HttpEntity<Faculty> entity = new HttpEntity<>(expectedFaculty);
 
         ResponseEntity<Faculty> actualFaculty = this.restTemplate.exchange("http://localhost:" + port + "/faculty",

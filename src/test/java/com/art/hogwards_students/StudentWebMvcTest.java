@@ -210,6 +210,7 @@ public class StudentWebMvcTest {
     public void testDeleteStudent() throws Exception {
 
         doNothing().when(studentRepository).deleteById(id);
+        when(studentRepository.existsById(id)).thenReturn(true);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/student/" + id)

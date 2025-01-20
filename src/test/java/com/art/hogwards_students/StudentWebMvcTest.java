@@ -1,24 +1,21 @@
 package com.art.hogwards_students;
 
-import com.art.hogwards_students.controllers.FacultyController;
 import com.art.hogwards_students.controllers.StudentController;
 import com.art.hogwards_students.model.Faculty;
 import com.art.hogwards_students.model.Student;
 import com.art.hogwards_students.repositories.FacultyRepository;
 import com.art.hogwards_students.repositories.StudentRepository;
-import com.art.hogwards_students.services.FacultyService;
 import com.art.hogwards_students.services.StudentService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.core.ParameterizedTypeReference;
+
 import org.springframework.http.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,8 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;

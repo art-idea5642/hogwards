@@ -55,7 +55,7 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<Collection<Student>> getStudents(@RequestParam(required = false) String facultyName) {
-        if (facultyName != null && !facultyName.isBlank()){
+        if (facultyName != null && !facultyName.isBlank()) {
             return ResponseEntity.ok(studentService.getAllByFaculty(facultyName));
         }
         return ResponseEntity.ok(studentService.getAll());
@@ -91,17 +91,17 @@ public class StudentController {
     }
 
     @GetMapping("/counter")
-    public long countAllStudent () {
+    public long countAllStudent() {
         return studentService.countAllStudents();
     }
 
     @GetMapping("/average_age")
-    public float getAverageAge () {
+    public float getAverageAge() {
         return studentService.getAverageAge();
     }
 
     @GetMapping("/last_5_students")
-    public ResponseEntity<List<Student>> findLastFiveStudents () {
+    public ResponseEntity<List<Student>> findLastFiveStudents() {
         List<Student> students = studentService.findLastFiveStudents();
         if (students.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -109,9 +109,9 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping ("/students-with-a")
-    public ResponseEntity <List <String>> getStudentsByNameStartsWithA () {
-        List <String> students = studentService.getStudentsByNameStartsWithA();
+    @GetMapping("/students-with-a")
+    public ResponseEntity<List<String>> getStudentsByNameStartsWithA() {
+        List<String> students = studentService.getStudentsByNameStartsWithA();
         if (students.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -119,8 +119,38 @@ public class StudentController {
     }
 
     @GetMapping("/average_age_streams")
-    public double getAverageAgeWithStreams () {
+    public double getAverageAgeWithStreams() {
         return studentService.getAverageAgeWithStreams();
+    }
+
+    @GetMapping("/print-parallel")
+    public void getStudentName() {
+        System.out.println(studentService.findNames(1));
+        System.out.println(studentService.findNames(2));
+        new Thread(() -> {
+            System.out.println(studentService.findNames(3));
+            System.out.println(studentService.findNames(4));
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentService.findNames(5));
+            System.out.println(studentService.findNames(6));
+        }).start();
+    }
+
+    @GetMapping("/print-synchronized")
+    public void getStudentNameSynchronized() {
+        studentService.findNamesSynchronized(1);
+        studentService.findNamesSynchronized(2);
+        new Thread(() -> {
+            studentService.findNamesSynchronized(3);
+            studentService.findNamesSynchronized(4);
+        }).start();
+
+        new Thread(() -> {
+            studentService.findNamesSynchronized(5);
+            studentService.findNamesSynchronized(6);
+        }).start();
     }
 
 }

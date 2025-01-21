@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 @Service
 public class StudentService {
@@ -22,6 +22,8 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
+
+    private static final Object flag = new Object();
 
     public Student createStudent(Student student) {
         logger.info("Was invoked method for create student");
@@ -145,5 +147,31 @@ public class StudentService {
         return averageAge;
     }
 
+    public String findNames(long id) {
+
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return ("Студент с id = " + id + " не найден.");
+        } else {
+            return student.getName();
+        }
+    }
+
+    int count = 0;
+
+    public void findNamesSynchronized(long id) {
+
+        Student student = studentRepository.findById(id).orElse(null);
+
+        synchronized (StudentService.class) {
+            count ++;
+            if (student == null) {
+                System.out.println(count + " операция: Студент с id = " + id + " не найден.");
+            } else {
+                System.out.println(count + " операция:" + student.getName());
+            }
+        }
+
+    }
 
 }

@@ -2,8 +2,10 @@ package com.art.hogwards_students.controllers;
 
 import com.art.hogwards_students.model.Faculty;
 import com.art.hogwards_students.services.FacultyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.List;
@@ -76,6 +78,15 @@ public class FacultyController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(faculties);
+    }
+
+    @GetMapping ("/longest_name")
+    public ResponseEntity <String> getTheLongestFacultyName () {
+        String facultyName = facultyService.getTheLongestFacultyName();
+        if (facultyName == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(facultyName);
     }
 
 

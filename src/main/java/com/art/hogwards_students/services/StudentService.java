@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -107,4 +108,42 @@ public class StudentService {
         logger.debug("Last five students: {}", students);
         return students;
     }
+
+    public List<String> getStudentsByNameStartsWithA() {
+        List<Student> students = studentRepository.findAll();
+
+        List<String> studentsWithA = students.stream()
+                .map(Student::getName)
+                .filter(name -> name.startsWith("A"))
+                .map(String::toUpperCase)
+                .sorted()
+                .toList();
+
+        if (studentsWithA.isEmpty()) {
+            logger.warn("No students found with names starting with 'A'.");
+        } else {
+            logger.debug("Students with names starting with 'A': {}", studentsWithA);
+        }
+
+        return studentsWithA;
+    }
+
+    public double getAverageAgeWithStreams() {
+        List<Student> students = studentRepository.findAll();
+
+        if (students.isEmpty()) {
+            logger.warn("No students found to calculate the average age.");
+            throw new IllegalArgumentException("Список студентов пуст. Невозможно рассчитать средний возраст.");
+        }
+
+        double averageAge = students.stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0);
+
+        logger.debug("Calculated average age: {}", averageAge);
+        return averageAge;
+    }
+
+
 }

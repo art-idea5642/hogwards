@@ -4,6 +4,7 @@ import com.art.hogwards_students.model.Faculty;
 import com.art.hogwards_students.repositories.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,5 +77,14 @@ public class FacultyService {
         logger.info("Was invoked method for retrieving all faculties");
         return facultyRepository.findAll();
     }
+
+    public String getTheLongestFacultyName() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElseThrow(() -> new RuntimeException("Факультеты не найдены"));
+    }
+
+
 }
 

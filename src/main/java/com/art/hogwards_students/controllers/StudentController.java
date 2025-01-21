@@ -109,5 +109,18 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping ("/students-with-a")
+    public ResponseEntity <List <String>> getStudentsByNameStartsWithA () {
+        List <String> students = studentService.getStudentsByNameStartsWithA();
+        if (students.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/average_age_streams")
+    public double getAverageAgeWithStreams () {
+        return studentService.getAverageAgeWithStreams();
+    }
 
 }

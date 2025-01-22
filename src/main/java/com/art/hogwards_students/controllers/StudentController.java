@@ -125,32 +125,12 @@ public class StudentController {
 
     @GetMapping("/print-parallel")
     public void getStudentName() {
-        System.out.println(studentService.findNames(1));
-        System.out.println(studentService.findNames(2));
-        new Thread(() -> {
-            System.out.println(studentService.findNames(3));
-            System.out.println(studentService.findNames(4));
-        }).start();
-
-        new Thread(() -> {
-            System.out.println(studentService.findNames(5));
-            System.out.println(studentService.findNames(6));
-        }).start();
+        studentService.printNames();
     }
 
     @GetMapping("/print-synchronized")
     public void getStudentNameSynchronized() {
-        studentService.findNamesSynchronized(1);
-        studentService.findNamesSynchronized(2);
-        new Thread(() -> {
-            studentService.findNamesSynchronized(3);
-            studentService.findNamesSynchronized(4);
-        }).start();
-
-        new Thread(() -> {
-            studentService.findNamesSynchronized(5);
-            studentService.findNamesSynchronized(6);
-        }).start();
+        studentService.printNamesSynchronized();
     }
 
 }

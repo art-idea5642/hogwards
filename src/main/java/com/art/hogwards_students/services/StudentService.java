@@ -147,31 +147,60 @@ public class StudentService {
         return averageAge;
     }
 
-    public String findNames(long id) {
+    public void findNames(long id) {
 
         Student student = studentRepository.findById(id).orElse(null);
         if (student == null) {
-            return ("Студент с id = " + id + " не найден.");
+            System.out.println("Студент с id = " + id + " не найден.");
         } else {
-            return student.getName();
+            System.out.println(student.getName());
         }
     }
 
-    int count = 0;
 
+
+    public void printNames() {
+        findNames(1);
+        findNames(2);
+        new Thread(() -> {
+            findNames(3);
+            findNames(4);
+        }).start();
+
+        new Thread(() -> {
+            findNames(5);
+            findNames(6);
+        }).start();
+    }
+    int count = 0;
     public void findNamesSynchronized(long id) {
 
         Student student = studentRepository.findById(id).orElse(null);
 
         synchronized (StudentService.class) {
-            count ++;
+            count++;
             if (student == null) {
                 System.out.println(count + " операция: Студент с id = " + id + " не найден.");
             } else {
                 System.out.println(count + " операция:" + student.getName());
             }
         }
-
     }
+
+    public void printNamesSynchronized() {
+        findNamesSynchronized(1);
+        findNamesSynchronized(2);
+        new Thread(() -> {
+            findNamesSynchronized(3);
+            findNames(4);
+        }).start();
+
+        new Thread(() -> {
+            findNamesSynchronized(5);
+            findNamesSynchronized(6);
+        }).start();
+    }
+
+
 
 }

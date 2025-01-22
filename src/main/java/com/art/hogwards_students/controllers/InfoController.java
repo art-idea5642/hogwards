@@ -1,5 +1,6 @@
 package com.art.hogwards_students.controllers;
 
+import com.art.hogwards_students.services.InfoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,12 @@ import java.util.stream.Stream;
 @RequestMapping("/port")
 public class InfoController {
 
+    private final InfoService infoService;
+
+    public InfoController(InfoService infoService) {
+        this.infoService = infoService;
+    }
+
     @Value("${server.port}")
     private int port;
 
@@ -22,10 +29,6 @@ public class InfoController {
 
     @GetMapping("/sum")
     public ResponseEntity <Long> sum () {
-        long sum = Stream.
-                iterate(1L, a -> a +1)
-                .limit(1_000_000)
-                .reduce(0L, Long::sum);
-        return ResponseEntity.ok(sum);
+        return ResponseEntity.ok(infoService.sum());
     }
 }

@@ -11,5 +11,4 @@ public class HogwardsStudentsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HogwardsStudentsApplication.class, args);
 	}
-
 }
